@@ -9,10 +9,6 @@ const basketSchema = new Schema({
         type: String,
         default: null
     },
-    channelId: {
-        type: String,
-        default: null
-    },
     patterns: {
         type: [{
             type: Schema.Types.ObjectId,
