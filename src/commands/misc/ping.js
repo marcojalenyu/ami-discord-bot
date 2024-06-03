@@ -7,7 +7,7 @@ module.exports = {
     // options; Object[],
 
     callback: (client, interaction) => {
-        console.log(interaction)
+        // console.log(interaction)
         interaction.reply(`Pong! ${client.ws.ping}ms`);
     }
 }
