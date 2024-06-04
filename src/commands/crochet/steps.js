@@ -40,7 +40,15 @@ module.exports = {
                         interaction.reply({ content: `No steps found in pattern "${name}".` });
                         return;
                     } else {
-                        interaction.reply({ content: `Steps in pattern "${name}":\n${steps.join('\n')}` });
+                        const message = `Steps in pattern "${name}":\n`;
+                        for (let i = 0; i < steps.length; i++) {
+                            message += `${i + 1}. ${steps[i]}`;
+                            if (i !== pattern.currentStep) {
+                                message += ' <--';
+                            }
+                            message += '\n';
+                        }
+                        interaction.reply({ content: message });
                     }
                 }
             }
