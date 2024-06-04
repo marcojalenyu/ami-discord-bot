@@ -1,7 +1,7 @@
 const Basket = require('../../models/Basket');
 
 module.exports = {
-    name: 'join',
+    name: 'register',
     description: 'Register a basket to store your patterns',
     // deleted: true,
     // devOnly: Boolean,

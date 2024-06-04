@@ -9,6 +9,18 @@ const basketSchema = new Schema({
         type: String,
         default: null
     },
+    channelId: {
+        type: String,
+        default: null
+    },
+    isRecording: {
+        type: Boolean,
+        default: false
+    },
+    currentPattern: {
+        type: Schema.Types.ObjectId,
+        default: null
+    },
     patterns: {
         type: [{
             type: Schema.Types.ObjectId,
