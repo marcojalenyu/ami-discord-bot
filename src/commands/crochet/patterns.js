@@ -1,0 +1,36 @@
+const Basket = require("../../models/Basket");
+const Pattern = require("../../models/Pattern");
+
+module.exports = {
+    name: 'patterns',
+    description: 'View patterns in your basket.',
+    // deleted: true,
+    // devOnly: Boolean,
+    // testOnly: Boolean,
+    // options: Object[],
+    callback: async (client, interaction) => {
+        try {
+            const basket = await Basket.findOne({ guildId: interaction.guildId }) ||
+                await Basket.findOne({ userId: interaction.user.id });
+
+            if (!basket || interaction.guildId !== basket.guildId) {
+                interaction.reply({
+                    content: 'Error: No basket registered. Please register a basket first.',
+                });
+                return;
+            } else {
+                const patterns = await Pattern.find({ basketId: basket._id });
+                if (patterns.length === 0) {
+                    interaction.reply({ content: 'No patterns found in basket.' });
+                    return;
+                } else {
+                    const patternNames = patterns.map(pattern => pattern.name);
+                    interaction.reply({ content: `Patterns in basket:\n${patternNames.join('\n')}` });
+                }
+            }
+        } catch (error) {
+            console.error(error);
+            interaction.reply('Oh no! The basket is upside down! Please try again.');
+        }
+    }
+}
