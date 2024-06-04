@@ -34,6 +34,12 @@ module.exports = {
                     interaction.reply({ content: `Pattern "${patternName}" not found in basket.` });
                     return;
                 } else {
+                    // Reset the current pattern back to 0
+                    if (basket.currentPattern) {
+                        const oldPattern = await Pattern.findOne({ _id: basket.currentPattern, basketId: basket._id });
+                        oldPattern.currentStep = 0;
+                        await oldPattern.save();
+                    }
                     // Set the current pattern to the selected pattern
                     basket.currentPattern = pattern._id;
                     await basket.save();
@@ -41,11 +47,14 @@ module.exports = {
 
                     // Send the first step of the pattern (if it exists)
                     if (pattern.steps.length > 0) {
+                        const steps = pattern.steps;
+                        const currentStep = steps[0];
                         if (interaction.guildId) {
-                            interaction.channel.send(pattern.steps[0]);
+                            interaction.channel.send({ content: `Step 1/${steps.length}: ${currentStep}`});
                         } else {
-                            interaction.user.send(pattern.steps[0]);
+                            interaction.user.send({ content: `Step 1/${steps.length}: ${currentStep}`});
                         }
+                        pattern.currentStep = 1;
                     } else {
                         if (interaction.guildId) {
                             interaction.channel.send('No steps recorded yet. Start recording steps with `/record`');
