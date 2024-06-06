@@ -10,10 +10,8 @@ module.exports = async (client, message) => {
         // Check if the guild or user is in the database
         const basket = await Basket.findOne({ guildId: message.guild.id }) ||
             await Basket.findOne({ userId: message.author.id });
-        console.log("Reading comment")
         // If the basket is not found or the guild does not match the basket's guild
         if (!basket || message.guild.id !== basket.guildId) {
-            console.log("Guild mismatch")
             return;
         } else {
             console.log(basket.channelId, message.channel.id)
