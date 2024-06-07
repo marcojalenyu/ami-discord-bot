@@ -2,17 +2,11 @@ const { ApplicationCommandOptionType } = require("discord.js");
 
 module.exports = {
     name: 'cost',
-    description: 'Calculate the cost of a pattern',
+    description: 'Calculate material cost for a crochet project',
     // deleted: true,
     // devOnly: Boolean,
     // testOnly: Boolean,
     options: [
-        {
-            name: 'used',
-            description: 'Grams of yarn used in the project',
-            type: ApplicationCommandOptionType.Number,
-            required: true,
-        },
         {
             name: 'yarn',
             description: 'Amount of grams per yarn ball',
@@ -20,8 +14,14 @@ module.exports = {
             required: true,
         },
         {
+            name: 'remaining',
+            description: 'Amount of grams of remaining yarn in the ball',
+            type: ApplicationCommandOptionType.Number,
+            required: true,
+        },
+        {
             name: 'price',
-            description: 'Price of a yarn ball',
+            description: 'Price of the yarn ball',
             type: ApplicationCommandOptionType.Number,
             required: true,
         },
@@ -29,10 +29,10 @@ module.exports = {
 
     callback: async (client, interaction) => {
         try {
-            const used = interaction.options.getNumber('used');
             const yarn = interaction.options.getNumber('yarn');
+            const remaining = interaction.options.getNumber('remaining');
             const price = interaction.options.getNumber('price');
-            const balls = used / yarn;
+            const balls = (yarn-remaining) / yarn;
             const cost = balls * price;
             interaction.reply({
                 content: `The project used ${balls.toFixed(2)} yarn balls, costing ${cost.toFixed(2)}.`,
