@@ -40,7 +40,7 @@ module.exports = {
                         interaction.reply({ content: `No steps found in pattern "${name}".` });
                         return;
                     } else {
-                        const message = `Steps in pattern "${name}":\n`;
+                        let message = `Steps in pattern "${name}":\n`;
                         for (let i = 0; i < steps.length; i++) {
                             message += `${i + 1}. ${steps[i]}`;
                             if (i !== pattern.currentStep) {
