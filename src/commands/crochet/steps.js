@@ -43,7 +43,7 @@ module.exports = {
                         let message = `Steps in pattern "${name}":\n`;
                         for (let i = 0; i < steps.length; i++) {
                             message += `${i + 1}. ${steps[i]}`;
-                            if (i !== pattern.currentStep) {
+                            if (i === pattern.currentStep) {
                                 message += ' <--';
                             }
                             message += '\n';
