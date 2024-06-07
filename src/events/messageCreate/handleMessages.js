@@ -14,7 +14,6 @@ module.exports = async (client, message) => {
         if (!basket || message.guild.id !== basket.guildId) {
             return;
         } else {
-            console.log(basket.channelId, message.channel.id)
             if (basket.isRecording && basket.channelId === message.channel.id) {
                 const steps = message.content.split('\n');
                 const currentPattern = await Pattern.findById(basket.currentPattern);
