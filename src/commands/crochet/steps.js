@@ -19,32 +19,30 @@ module.exports = {
 
     callback: async (client, interaction) => {
         try {
-            const basket = await Basket.findOne({ guildId: interaction.guildId }) ||
-                await Basket.findOne({ userId: interaction.user.id });
-
-            if (!basket || interaction.guildId !== basket.guildId) {
+            const basket = await Basket.findOne({ guildId: interaction.guildId });
+            if (!basket) {
                 interaction.reply({
-                    content: 'Error: No basket registered. Please register a basket first.',
+                    content: 'Error: No basket registered. Please /register a basket first.',
+                    ephemeral: true
                 });
-                return;
             } else {
                 const name = interaction.options.getString('name');
                 const pattern = await Pattern.findOne({ name: name, basketId: basket._id });
-
                 if (!pattern) {
-                    interaction.reply({ content: `Pattern "${name}" not found in basket.` });
-                    return;
+                    interaction.reply({ 
+                        content: `Error: Pattern "${name}" not found in basket.`,
+                        ephemeral: true
+                    });
                 } else {
                     const steps = pattern.steps;
                     if (steps.length === 0) {
                         interaction.reply({ content: `No steps found in pattern "${name}".` });
-                        return;
                     } else {
-                        let message = `Steps in pattern "${name}":\n`;
+                        let message = `Steps in Pattern **${name}**:\n`;
                         for (let i = 0; i < steps.length; i++) {
                             message += `${i + 1}. ${steps[i]}`;
                             if (i === pattern.currentStep) {
-                                message += ' <--';
+                                message += ' <---';
                             }
                             message += '\n';
                         }
@@ -54,7 +52,10 @@ module.exports = {
             }
         } catch (error) {
             console.error(error);
-            interaction.reply('Oh no! The pattern got crumpled! Please try again.');
+            interaction.reply({
+                content: 'Oh no! The pattern got tangled! Please try again.',
+                ephemeral: true
+            });
         }
     }
 }

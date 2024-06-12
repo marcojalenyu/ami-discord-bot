@@ -11,40 +11,48 @@ module.exports = {
 
     callback: async (client, interaction) => {
         try {
-            const basket = await Basket.findOne({ guildId: interaction.guildId }) ||
-                await Basket.findOne({ userId: interaction.user.id });
-            if (!basket || interaction.guildId !== basket.guildId) {
+            const basket = await Basket.findOne({ guildId: interaction.guildId });
+            if (!basket) {
                 interaction.reply({
-                    content: 'Error: No basket registered. Please register a basket first.',
+                    content: 'Error: No basket registered. Please /register a basket first.',
+                    ephereal: true
                 });
-                return;
             } else {
                 const pattern = await Pattern.findOne({ _id: basket.currentPattern, basketId: basket._id });
                 if (!pattern) {
-                    interaction.reply({ content: 'Error: No pattern set in basket.' });
-                    return;
+                    interaction.reply({ 
+                        content: 'Error: No pattern set in basket.',
+                        ephemeral: true
+                    });
                 } else {
                     const steps = pattern.steps;
                     if (steps.length === 0) {
-                        interaction.reply({ content: `No steps found in pattern "${pattern.name}".` });
-                        return;
+                        interaction.reply({ 
+                            content: `No steps found in pattern "${pattern.name}".`,
+                            ephemeral: true
+                        });
                     } else {
                         if (pattern.currentStep === 0) {
-                            interaction.reply({ content: `Pattern already at the first step.`});
-                            return;
+                            interaction.reply({ 
+                                content: `Pattern already at the first step.`,
+                                ephemeral: true
+                            });
                         } else {
                             pattern.currentStep = 0;
                             const currentIndex = pattern.currentStep;
                             const currentStep = pattern.steps[currentIndex];
                             await pattern.save();
-                            interaction.reply({ content: `Back to Step 1/${pattern.steps.length}: ${currentStep}`});
+                            interaction.reply({ content: `Returning to the start\nStep 1/${pattern.steps.length}: ${currentStep}`});
                         }
                     }
                 }
             }
         } catch (error) {
             console.error(error);
-            interaction.reply('Oh no! The pattern got tangled! Please try again.');
+            interaction.reply({
+                content: 'Oh no! The pattern got tangled! Please try again.',
+                ephemeral: true
+            });
         }
     }
 }

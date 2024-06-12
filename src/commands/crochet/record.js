@@ -4,7 +4,7 @@ const Pattern = require("../../models/Pattern");
 
 module.exports = {
     name: 'record',
-    description: 'Turn on record mode to turn lines of next messages into steps for a pattern.',
+    description: 'Starts recording each line of the next messages as steps for a pattern.',
     // deleted: true,
     // devOnly: Boolean,
     // testOnly: Boolean,
@@ -19,40 +19,43 @@ module.exports = {
 
     callback: async (client, interaction) => {
         try {
-            const basket = await Basket.findOne({ guildId: interaction.guildId }) || 
-                await Basket.findOne({ userId: interaction.user.id });
-            if (!basket || interaction.guildId !== basket.guildId) {
+            const basket = await Basket.findOne({ guildId: interaction.guildId });
+            if (!basket) {
                 interaction.reply({
-                    content: 'Error: No basket registered. Please register a basket first.',
+                    content: 'Error: No basket registered. Please /register a basket first.',
+                    ephemeral: true
                 });
-                return;
             } else {
-                // Create a new pattern and save it to the database
+                // Check if the pattern already exists
                 const name = interaction.options.getString('name');
-                // Check if the pattern name already exists
                 const existingPattern = await Pattern.findOne({ name: name, basketId: basket._id });
-                if (!existingPattern) {
+                let message = '';
+                // If the pattern exists, set it as the current pattern, else create a new pattern
+                if (existingPattern) { 
+                    basket.currentPattern = existingPattern._id; 
+                } else {
                     const pattern = new Pattern({ 
                         basketId: basket._id,
                         name: name 
                     });
                     await pattern.save();
                     basket.patterns.push(pattern);
-                    basket.currentPattern = pattern;
-                } else {
-                    basket.currentPattern = existingPattern._id;
-                }                
+                    basket.currentPattern = pattern._id;
+                    message += `Pattern "${name}" added to the basket!\n`;
+                }      
                 // Save the channel ID and set recording to true
-                if (interaction.guildId) {
-                    basket.channelId = interaction.channelId;
-                }
+                basket.channelId = interaction.channelId;
                 basket.isRecording = true;
                 await basket.save();
-                interaction.reply({ content: `Pattern "${name}" added to basket! This channel is currently recording the next messages as steps.` });
+                message += `This channel is currently recording the next messages as steps for "${name}".`;
+                interaction.reply({ content: message });
             }
         } catch (error) {
             console.error(error);
-            interaction.reply('Oh no! The pattern got tangled! Please try again.');
+            interaction.reply({
+                content: 'Oh no! The pattern got tangled! Please try again.',
+                ephemeral: true
+            });
         }
     }
 }

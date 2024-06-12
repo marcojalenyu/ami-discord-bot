@@ -10,27 +10,29 @@ module.exports = {
     // options: Object[],
     callback: async (client, interaction) => {
         try {
-            const basket = await Basket.findOne({ guildId: interaction.guildId }) ||
-                await Basket.findOne({ userId: interaction.user.id });
-            if (!basket || interaction.guildId !== basket.guildId) {
+            const basket = await Basket.findOne({ guildId: interaction.guildId });
+            if (!basket) {
                 interaction.reply({
-                    content: 'Error: No basket registered. Please register a basket first.',
+                    content: 'Error: No basket registered. Please /register a basket first.',
+                    ephemeral: true
                 });
-                return;
             } else {
                 const pattern = await Pattern.findOne({ _id: basket.currentPattern, basketId: basket._id });
                 if (!pattern) {
-                    interaction.reply({ content: 'Error: No pattern set in basket.' });
-                    return;
+                    interaction.reply({ 
+                        content: 'Error: No pattern selected. Use /crochet to start crocheting a pattern.',
+                        ephemeral: true
+                     });
                 } else {
                     const steps = pattern.steps;
                     if (steps.length === 0) {
-                        interaction.reply({ content: `No steps found in pattern "${pattern.name}".` });
-                        return;
+                        interaction.reply({ 
+                            content: `Error: No steps found in pattern "${pattern.name}".`,
+                            ephemeral: true
+                        });
                     } else {
                         if (pattern.currentStep === steps.length) {
                             interaction.reply({ content: `Pattern: "${pattern.name}"\nPattern completed!`});
-                            return;
                         } else {
                             const currentIndex = pattern.currentStep;
                             const currentStep = pattern.steps[currentIndex];
@@ -41,7 +43,10 @@ module.exports = {
             }
         } catch (error) {
             console.error(error);
-            interaction.reply('Oh no! The pattern got tangled! Please try again.');
+            interaction.reply({ 
+                content: 'There was an error finding the current step! Try again.', 
+                ephemeral: true 
+            });
         }
     }
 }

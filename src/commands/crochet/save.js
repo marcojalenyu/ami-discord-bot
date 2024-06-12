@@ -10,28 +10,30 @@ module.exports = {
 
     callback: async (client, interaction) => {
         try {
-            const basket = await Basket.findOne({ guildId: interaction.guildId }) ||
-                await Basket.findOne({ userId: interaction.user.id });            
-            if (!basket || interaction.guildId !== basket.guildId) {
+            const basket = await Basket.findOne({ guildId: interaction.guildId });            
+            if (!basket) {
                 interaction.reply({
-                    content: 'Error: No basket registered. Please register a basket first.',
+                    content: 'Error: No basket registered. Please /register a basket first.',
+                    ephemeral: true
                 });
-                return;
             } else if (!basket.isRecording) {
                 interaction.reply({
-                    content: 'Error: No pattern being recorded. Please start recording a pattern first.',
+                    content: 'Error: No pattern being recorded. Please /record a pattern first.',
+                    ephemeral: true
                 });
-                return;
             } else {
                 // Find the current pattern and set recording to false
                 basket.currentPattern = null;
                 basket.isRecording = false;
                 await basket.save();
-                interaction.reply({ content: `Pattern saved to basket!` });
+                interaction.reply({ content: `Recording stopped.` });
             }
         } catch (error) {
             console.error(error);
-            interaction.reply('Oh no! The pattern tangled while being stored! Please try again.');
+            interaction.reply({
+                content: 'Oh no! The pattern got tangled! Please try again.',
+                ephemeral: true
+            });
         }
     }
 }

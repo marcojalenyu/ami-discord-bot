@@ -10,19 +10,19 @@ module.exports = {
     // options: Object[],
     callback: async (client, interaction) => {
         try {
-            const basket = await Basket.findOne({ guildId: interaction.guildId }) ||
-                await Basket.findOne({ userId: interaction.user.id });
-
-            if (!basket || interaction.guildId !== basket.guildId) {
+            const basket = await Basket.findOne({ guildId: interaction.guildId });
+            if (!basket) {
                 interaction.reply({
-                    content: 'Error: No basket registered. Please register a basket first.',
+                    content: 'Error: No basket registered. Please /register a basket first.',
+                    ephemeral: true
                 });
-                return;
             } else {
                 const patterns = await Pattern.find({ basketId: basket._id });
                 if (patterns.length === 0) {
-                    interaction.reply({ content: 'No patterns found in basket.' });
-                    return;
+                    interaction.reply({ 
+                        content: 'No pattern found in basket. Use /record to start recording a pattern.', 
+                        ephemeral: true
+                    });
                 } else {
                     const patternNames = patterns.map(pattern => pattern.name);
                     interaction.reply({ content: `Patterns in basket:\n${patternNames.join('\n')}` });

@@ -10,11 +10,10 @@ module.exports = {
 
     callback: async (client, interaction) => {
         try {
-            const basket = await Basket.findOne({ guildId: interaction.guildId }) ||
-                await Basket.findOne({ userId: interaction.user.id });
-            if (!basket || interaction.guildId !== basket.guildId) {
+            const basket = await Basket.findOne({ guildId: interaction.guildId });
+            if (!basket) {
                 interaction.reply({
-                    content: 'Error: No basket registered. Please register a basket first.',
+                    content: 'Error: No basket registered. Please /register a basket first.',
                 });
                 return;
             } else {
@@ -28,7 +27,10 @@ module.exports = {
             }
         } catch (error) {
             console.error(error);
-            interaction.reply('Oh no! The basket fell off! Please try again.');
+            interaction.reply({
+                content: 'Oh no! The basket fell off! Please try again.',
+                ephemeral: true
+            });
         }
     }
 }

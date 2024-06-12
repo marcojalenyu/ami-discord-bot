@@ -19,19 +19,20 @@ module.exports = {
 
     callback: async (client, interaction) => {
         try {
-            const basket = await Basket.findOne({ guildId: interaction.guildId }) ||
-                await Basket.findOne({ userId: interaction.user.id });
-            if (!basket || interaction.guildId !== basket.guildId) {
+            const basket = await Basket.findOne({ guildId: interaction.guildId });
+            if (!basket) {
                 interaction.reply({
-                    content: 'Error: No basket registered. Please register a basket first.',
+                    content: 'Error: No basket registered. Please /register a basket first.',
+                    ephemeral: true
                 });
-                return;
             } else {
                 const patternName = interaction.options.getString('pattern');
                 const pattern = await Pattern.findOne({ name: patternName, basketId: basket._id });
                 if (!pattern) {
-                    interaction.reply({ content: `Pattern "${patternName}" not found in basket.` });
-                    return;
+                    interaction.reply({ 
+                        content: `Pattern "${patternName}" not found in basket.`,
+                        ephemeral: true
+                    });
                 } else {
                     if (basket.currentPattern) {
                         if (basket.currentPattern.equals(pattern._id)) {
@@ -48,7 +49,10 @@ module.exports = {
             }
         } catch (error) {
             console.error(error);
-            interaction.reply('Oh no! The basket fell off! Please try again.');
+            interaction.reply({
+                content: 'Oh no! The pattern got tangled! Please try again.',
+                ephemeral: true
+            });
         }
     }
 }
