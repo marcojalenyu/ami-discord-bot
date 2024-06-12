@@ -5,10 +5,6 @@ const basketSchema = new Schema({
         type: String,
         default: null
     },
-    userId: {
-        type: String,
-        default: null
-    },
     channelId: {
         type: String,
         default: null
