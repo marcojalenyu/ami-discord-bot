@@ -40,7 +40,10 @@ module.exports = {
             });
         } catch (error) {
             console.error(error);
-            interaction.reply('Oh no! The yarn calculator ran out of batteries.');
+            interaction.reply({ 
+                content: 'Oh no! The calculator ran out of batteries. Try again.', 
+                ephemeral: true 
+            });
         }
     }
 }
