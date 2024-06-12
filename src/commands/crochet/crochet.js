@@ -38,8 +38,7 @@ module.exports = {
                     const steps = pattern.steps;
                     const step = steps[pattern.currentStep];
                     // Send the current step to the channel
-                    interaction.reply({ content: `Starting pattern "${patternName}".` });
-                    interaction.channel.send({ content: `Step ${pattern.currentStep+1}/${steps.length}: ${step}`});
+                    interaction.reply({ content: `Starting pattern "${patternName}".\nStep ${pattern.currentStep+1}/${steps.length}: ${step}` });
                 } else if (pattern && pattern.steps.length === 0) {
                     interaction.reply({ 
                         content: `Error: No steps found. "/record ${patternName}" to add steps.`,
