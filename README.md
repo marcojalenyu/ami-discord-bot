@@ -1,10 +1,10 @@
-## About Crochy ##
+## About Ami ##
 
 Store patterns and track your progress with Crochy, your friendly yarn here to manage your crochet patterns!
 
-<img src="https://github.com/Maracoo/crochy-discord-bot/blob/main/src/assets/pfp.png" width="25%">
+<img src="https://github.com/Maracoo/ami-discord-bot/blob/main/src/assets/pfp.png" width="25%">
 
-[Click here to invite Crochy to your server!](https://discord.com/oauth2/authorize?client_id=1247071644837744743)
+[Click here to invite Ami to your server!](https://discord.com/oauth2/authorize?client_id=1247071644837744743)
 
 For questions and discussions: [Join the support server!](https://discord.gg/Sg5vzWM6Gv)
 
