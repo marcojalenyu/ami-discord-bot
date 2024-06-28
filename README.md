@@ -1,6 +1,6 @@
 ## About Ami ##
 
-Store patterns and track your progress with Crochy, your friendly yarn here to manage your crochet patterns!
+Store patterns and track your progress with Ami, your friendly yarn here to manage your crochet patterns!
 
 <img src="https://github.com/Maracoo/ami-discord-bot/blob/main/src/assets/pfp.png" width="25%">
 
