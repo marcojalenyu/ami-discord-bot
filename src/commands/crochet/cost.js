@@ -34,8 +34,17 @@ module.exports = {
             const price = interaction.options.getNumber('price');
             const balls = (yarn-remaining) / yarn;
             const cost = balls * price;
+            let message = `Cost Breakdown\n`;
+            message += `-----------\n`;
+            message += `Yarn (Y): ${yarn}g\n`;
+            message += `Remaining (R): ${remaining}g\n`;
+            message += `Balls (B): (Y-R)/Y = ${balls.toFixed(2)}\n`;
+            message += `Price (P): ${price}/ball\n`;
+            message += `-----------\n`;
+            message += `Cost: B * P = ${cost.toFixed(2)}`;
+
             interaction.reply({
-                content: `The project used ${balls.toFixed(2)} yarn balls, costing ${cost.toFixed(2)}.`,
+                content: message,
                 ephemeral: true,
             });
         } catch (error) {
