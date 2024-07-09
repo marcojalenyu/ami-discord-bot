@@ -31,7 +31,7 @@ module.exports = {
             message += `Raw Price (P): ${price}\n`;
             message += `Tax (T): ${tax*100}%\n`;
             message += `-----------\n`;
-            message += `Full Price: P + (P * T) = ${(price + taxAmount).toFixed(2)}`;
+            message += `Full Price: P + (P x T) = ${(price + taxAmount).toFixed(2)}`;
             interaction.reply({
                 content: message,
                 ephemeral: true,

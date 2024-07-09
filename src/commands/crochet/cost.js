@@ -38,10 +38,10 @@ module.exports = {
             message += `-----------\n`;
             message += `Yarn (Y): ${yarn}g\n`;
             message += `Remaining (R): ${remaining}g\n`;
-            message += `Balls (B): (Y-R)/Y = ${balls.toFixed(2)}\n`;
-            message += `Price (P): ${price}/ball\n`;
+            message += `Balls (B): (Y - R) / Y = ${balls.toFixed(2)}\n`;
+            message += `Price (P): ${price} per ball\n`;
             message += `-----------\n`;
-            message += `Cost: B * P = ${cost.toFixed(2)}`;
+            message += `Cost: B x P = ${cost.toFixed(2)}`;
 
             interaction.reply({
                 content: message,

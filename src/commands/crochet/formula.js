@@ -11,9 +11,9 @@ module.exports = {
     callback: async (client, interaction) => {
         try {
             let message = `**Crochet Formulas**\n`;
-            message += `\`/cost\` = price*(yarn-remaining)/yarn\n`;
-            message += `\`/tax\` = price*tax\n`;
-            message += `\`/addtax\` = price+(price*tax)\n`;
+            message += `\`/cost\` = Price x (Yarn - Remaining) / Yarn\n`;
+            message += `\`/tax\` = Price x Tax\n`;
+            message += `\`/addtax\` = Price + (Price x Tax)\n`;
             interaction.reply({
                 content: message,
                 ephemeral: true,
