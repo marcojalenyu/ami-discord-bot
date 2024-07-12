@@ -28,11 +28,12 @@ module.exports = {
             const taxAmount = price * tax;
             let message = `Tax Breakdown\n`;
             message += `-----------\n`;
-            message += `Price (P): ${price}\n`;
+            message += `Full Price (P): ${price}\n`;
             message += `Tax (T): ${tax*100}%\n`;
             message += `-----------\n`;
             message += `Price (No Tax): P - (P * T) = ${(price - taxAmount).toFixed(2)}\n`;
-            message += `Tax Amount: P * T = ${taxAmount.toFixed(2)}`;            
+            message += `Tax Amount: P * T = ${taxAmount.toFixed(2)}\n`;            
+            message += `At a tax rate of ${tax*100}%, the product is ${(price - taxAmount).toFixed(2)} before tax.`;
             interaction.reply({
                 content: message,
                 ephemeral: true,
