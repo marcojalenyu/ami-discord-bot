@@ -29,10 +29,10 @@ module.exports = {
             let message = `Price Breakdown\n`;
             message += `-----------\n`;
             message += `Raw Price (P): ${price}\n`;
-            message += `Tax (T): ${tax*100}%\n`;
+            message += `Tax (T): ${(tax*100).toFixed(2)}%\n`;
             message += `-----------\n`;
             message += `Full Price: P + (P x T) = ${(price + taxAmount).toFixed(2)}\n`;
-            message += `Given a tax rate of ${tax*100}%, the product will cost ${price + taxAmount}.`;
+            message += `Given a tax rate of ${(tax*100).toFixed(2)}%, the product will cost ${price + taxAmount}.`;
             interaction.reply({
                 content: message,
                 ephemeral: true,
