@@ -20,7 +20,6 @@ module.exports = {
     callback: async (client, interaction) => {
         try {
             const basket = await Basket.findOne({ guildId: interaction.guildId });
-            console.log(!interaction.channel.permissionsFor(client.user).has('ViewChannel'));
             if (!basket) {
                 interaction.reply({
                     content: 'Error: No basket registered. Please /register a basket first.',
