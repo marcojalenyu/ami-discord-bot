@@ -1,3 +1,4 @@
+const { MessageFlags } = require("discord.js");
 const Basket = require("../../models/Basket");
 const Pattern = require("../../models/Pattern");
 
@@ -29,7 +30,7 @@ module.exports = {
             console.error(error);
             interaction.reply({
                 content: 'Oh no! The basket fell off! Please try again.',
-                ephemeral: true
+                MessageFlags: MessageFlags.Ephemeral
             });
         }
     }

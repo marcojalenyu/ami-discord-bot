@@ -1,4 +1,4 @@
-const { ApplicationCommandOptionType } = require("discord.js");
+const { ApplicationCommandOptionType, MessageFlags } = require("discord.js");
 const Basket = require("../../models/Basket");
 const Pattern = require("../../models/Pattern");
 
@@ -23,7 +23,7 @@ module.exports = {
             if (!basket) {
                 interaction.reply({
                     content: 'Error: No basket registered. Please /register a basket first.',
-                    ephemeral: true
+                    MessageFlags: MessageFlags.Ephemeral
                 });
             } else {
                 // Find the current pattern in the basket
@@ -31,7 +31,7 @@ module.exports = {
                 if (!pattern) {
                     interaction.reply({ 
                         content: `Error: No pattern selected. Use /crochet to start crocheting a pattern.`,
-                        ephemeral: true
+                        MessageFlags: MessageFlags.Ephemeral
                     });
                 } else {
                     // Move to the selected step
@@ -39,7 +39,7 @@ module.exports = {
                     if (step < 1 || step > pattern.steps.length) {
                         interaction.reply({ 
                             content: `Error: Invalid. Enter a number between 1 and ${pattern.steps.length}.`,
-                            ephemeral: true
+                            MessageFlags: MessageFlags.Ephemeral
                         });
                     } else {
                         pattern.currentStep = step - 1;
@@ -52,7 +52,7 @@ module.exports = {
             console.error(error);
             interaction.reply({ 
                 content: 'There was an error moving to the step! Try again.', 
-                ephemeral: true 
+                MessageFlags: MessageFlags.Ephemeral
             });
         }
     }

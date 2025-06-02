@@ -1,4 +1,4 @@
-const { ApplicationCommandOptionType } = require("discord.js");
+const { ApplicationCommandOptionType, MessageFlags } = require("discord.js");
 
 module.exports = {
     name: 'cost',
@@ -45,13 +45,13 @@ module.exports = {
             message += `The project used ${balls.toFixed(2)} yarn balls, costing ${cost.toFixed(2)}.`;
             interaction.reply({
                 content: message,
-                ephemeral: true,
+                MessageFlags: MessageFlags.Ephemeral
             });
         } catch (error) {
             console.error(error);
             interaction.reply({ 
                 content: 'Oh no! The calculator ran out of batteries. Try again.', 
-                ephemeral: true 
+                flags: MessageFlags.Ephemeral
             });
         }
     }

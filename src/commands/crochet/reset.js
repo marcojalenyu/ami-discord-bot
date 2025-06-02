@@ -1,3 +1,4 @@
+const { MessageFlags } = require("discord.js");
 const Basket = require("../../models/Basket");
 const Pattern = require("../../models/Pattern");
 
@@ -15,27 +16,27 @@ module.exports = {
             if (!basket) {
                 interaction.reply({
                     content: 'Error: No basket registered. Please /register a basket first.',
-                    ephereal: true
+                    MessageFlags: MessageFlags.Ephemeral
                 });
             } else {
                 const pattern = await Pattern.findOne({ _id: basket.currentPattern, basketId: basket._id });
                 if (!pattern) {
                     interaction.reply({ 
                         content: 'Error: No pattern set in basket.',
-                        ephemeral: true
+                        MessageFlags: MessageFlags.Ephemeral
                     });
                 } else {
                     const steps = pattern.steps;
                     if (steps.length === 0) {
                         interaction.reply({ 
                             content: `No steps found in pattern "${pattern.name}".`,
-                            ephemeral: true
+                            MessageFlags: MessageFlags.Ephemeral
                         });
                     } else {
                         if (pattern.currentStep === 0) {
                             interaction.reply({ 
                                 content: `Pattern already at the first step.`,
-                                ephemeral: true
+                                MessageFlags: MessageFlags.Ephemeral
                             });
                         } else {
                             pattern.currentStep = 0;
@@ -51,7 +52,7 @@ module.exports = {
             console.error(error);
             interaction.reply({
                 content: 'Oh no! The pattern got tangled! Please try again.',
-                ephemeral: true
+                MessageFlags: MessageFlags.Ephemeral
             });
         }
     }

@@ -1,3 +1,4 @@
+const { MessageFlags } = require('discord.js');
 const Basket = require('../../models/Basket');
 
 module.exports = {
@@ -15,12 +16,12 @@ module.exports = {
             if (existingBasket) {
                 interaction.reply({
                     content: 'Error: This server already has a basket!',
-                    ephemeral: true
+                    MessageFlags: MessageFlags.Ephemeral
                 });
             } else if (!interaction.guildId) {
                 interaction.reply({
                     content: 'Error: You can only register baskets in servers.',
-                    ephemeral: true
+                    MessageFlags: MessageFlags.Ephemeral
                 });
             } else {
                 const newBasket = new Basket();
@@ -32,7 +33,7 @@ module.exports = {
             console.error(error);
             interaction.reply({
                 content: 'Uh oh, the basket had a defect! Please try again.',
-                ephemeral: true
+                MessageFlags: MessageFlags.Ephemeral
             });
         }
     }

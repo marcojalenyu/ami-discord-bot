@@ -1,4 +1,4 @@
-const { ApplicationCommandOptionType } = require("discord.js");
+const { ApplicationCommandOptionType, MessageFlags } = require("discord.js");
 
 module.exports = {
     name: 'subtraction',
@@ -28,13 +28,13 @@ module.exports = {
             const sum = num1 - num2;
             interaction.reply({
                 content: `The difference of ${num1} and ${num2} is ${sum}.`,
-                ephemeral: true,
+                MessageFlags: MessageFlags.Ephemeral
             });
         } catch (error) {
             console.error(error);
             interaction.reply({ 
                 content: 'Oh no! The calculator ran out of batteries. Try again.', 
-                ephemeral: true 
+                MessageFlags: MessageFlags.Ephemeral
             });
         }
     }

@@ -1,3 +1,4 @@
+const { MessageFlags } = require("discord.js");
 const Basket = require("../../models/Basket");
 const Pattern = require("../../models/Pattern");
 
@@ -15,28 +16,28 @@ module.exports = {
             if (!basket) {
                 interaction.reply({
                     content: 'Error: No basket registered. Please register a basket first.',
-                    ephemeral: true
+                    MessageFlags: MessageFlags.Ephemeral
                 });
             } else {
                 const pattern = await Pattern.findOne({ _id: basket.currentPattern, basketId: basket._id });
                 if (!pattern) {
                     interaction.reply({ 
                         content: 'Error: No pattern selected. Use /crochet to start crocheting a pattern.',
-                        ephemeral: true
+                        MessageFlags: MessageFlags.Ephemeral
                     });
                 } else {
                     const steps = pattern.steps;
                     if (steps.length === 0) {
                         interaction.reply({ 
                             content: `Error: No steps found in pattern "${pattern.name}".`,
-                            ephemeral: true
+                            MessageFlags: MessageFlags.Ephemeral
                         });
                     } else {
                         // If the current step is already the last step, return an error
                         if (pattern.currentStep === steps.length) {
                             interaction.reply({ 
                                 content: `Error: Pattern already completed.`,
-                                ephemeral: true
+                                MessageFlags: MessageFlags.Ephemeral
                             });
                         } else {
                             pattern.currentStep++;
@@ -56,7 +57,7 @@ module.exports = {
             console.error(error);
             interaction.reply({ 
                 content: 'There was an error moving to the next! Try again.', 
-                ephemeral: true 
+                MessageFlags: MessageFlags.Ephemeral
             });
         }
     }

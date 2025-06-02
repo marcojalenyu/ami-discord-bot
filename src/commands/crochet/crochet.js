@@ -1,4 +1,4 @@
-const { ApplicationCommandOptionType } = require("discord.js");
+const { ApplicationCommandOptionType, MessageFlags } = require("discord.js");
 const Basket = require("../../models/Basket");
 const Pattern = require("../../models/Pattern");
 
@@ -23,7 +23,7 @@ module.exports = {
             if (!basket) {
                 interaction.reply({
                     content: 'Error: No basket registered. Please /register a basket first.',
-                    ephemeral: true
+                    MessageFlags: MessageFlags.Ephemeral
                 });
             } else {
                 // Find the pattern in the basket
@@ -42,12 +42,12 @@ module.exports = {
                 } else if (pattern && pattern.steps.length === 0) {
                     interaction.reply({ 
                         content: `Error: No steps found. "/record ${patternName}" to add steps.`,
-                        ephemeral: true
+                        MessageFlags: MessageFlags.Ephemeral
                     });
                 } else {
                     interaction.reply({ 
                         content: `Error: Pattern "${patternName}" not found in basket.`,
-                        ephemeral: true
+                        MessageFlags: MessageFlags.Ephemeral
                     });
                 }
             }
@@ -55,7 +55,7 @@ module.exports = {
             console.error(error);
             interaction.reply({ 
                 content: 'Oh no! The pattern got crumpled! Try again.', 
-                ephemeral: true 
+                MessageFlags: MessageFlags.Ephemeral
             });
         }
     }

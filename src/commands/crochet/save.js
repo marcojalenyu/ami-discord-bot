@@ -1,3 +1,4 @@
+const { MessageFlags } = require("discord.js");
 const Basket = require("../../models/Basket");
 
 module.exports = {
@@ -14,12 +15,12 @@ module.exports = {
             if (!basket) {
                 interaction.reply({
                     content: 'Error: No basket registered. Please /register a basket first.',
-                    ephemeral: true
+                    MessageFlags: MessageFlags.Ephemeral
                 });
             } else if (!basket.isRecording) {
                 interaction.reply({
                     content: 'Error: No pattern being recorded. Please /record a pattern first.',
-                    ephemeral: true
+                    MessageFlags: MessageFlags.Ephemeral
                 });
             } else {
                 // Find the current pattern and set recording to false
@@ -32,7 +33,7 @@ module.exports = {
             console.error(error);
             interaction.reply({
                 content: 'Oh no! The pattern got tangled! Please try again.',
-                ephemeral: true
+                MessageFlags: MessageFlags.Ephemeral
             });
         }
     }

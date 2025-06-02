@@ -1,4 +1,4 @@
-const { ApplicationCommandOptionType } = require("discord.js");
+const { ApplicationCommandOptionType, MessageFlags } = require("discord.js");
 
 module.exports = {
     name: 'formula',
@@ -16,13 +16,13 @@ module.exports = {
             message += `\`/addtax\` = Price + (Price x Tax)\n`;
             interaction.reply({
                 content: message,
-                ephemeral: true,
+                MessageFlags: MessageFlags.Ephemeral
             });
         } catch (error) {
             console.error(error);
             interaction.reply({ 
                 content: 'Oh no! The calculator ran out of batteries. Try again.', 
-                ephemeral: true 
+                flags: MessageFlags.Ephemeral
             });
         }
     }

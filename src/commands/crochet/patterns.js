@@ -1,3 +1,4 @@
+const { MessageFlags } = require("discord.js");
 const Basket = require("../../models/Basket");
 const Pattern = require("../../models/Pattern");
 
@@ -14,14 +15,14 @@ module.exports = {
             if (!basket) {
                 interaction.reply({
                     content: 'Error: No basket registered. Please /register a basket first.',
-                    ephemeral: true
+                    MessageFlags: MessageFlags.Ephemeral
                 });
             } else {
                 const patterns = await Pattern.find({ basketId: basket._id });
                 if (patterns.length === 0) {
                     interaction.reply({ 
                         content: 'No pattern found in basket. Use /record to start recording a pattern.', 
-                        ephemeral: true
+                        MessageFlags: MessageFlags.Ephemeral
                     });
                 } else {
                     const patternNames = patterns.map(pattern => pattern.name);

@@ -1,4 +1,4 @@
-const { ApplicationCommandOptionType } = require("discord.js");
+const { ApplicationCommandOptionType, MessageFlags } = require("discord.js");
 const Basket = require("../../models/Basket");
 const Pattern = require("../../models/Pattern");
 
@@ -20,10 +20,16 @@ module.exports = {
     callback: async (client, interaction) => {
         try {
             const basket = await Basket.findOne({ guildId: interaction.guildId });
+            console.log(!interaction.channel.permissionsFor(client.user).has('ViewChannel'));
             if (!basket) {
                 interaction.reply({
                     content: 'Error: No basket registered. Please /register a basket first.',
-                    ephemeral: true
+                    flags: MessageFlags.Ephemeral
+                });
+            } else if (!interaction.channel.permissionsFor(client.user).has('ViewChannel')) {
+                interaction.reply({
+                    content: 'Error: I am not in this channel. Add me to the channel and try again.',
+                    flags: MessageFlags.Ephemeral
                 });
             } else {
                 // Check if the pattern already exists
@@ -51,10 +57,10 @@ module.exports = {
                 interaction.reply({ content: message });
             }
         } catch (error) {
-            console.error(error);
+            // console.error(error);
             interaction.reply({
                 content: 'Oh no! The pattern got tangled! Please try again.',
-                ephemeral: true
+                flags: MessageFlags.Ephemeral
             });
         }
     }

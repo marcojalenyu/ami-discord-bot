@@ -14,21 +14,21 @@ module.exports = {
             if (!basket) {
                 interaction.reply({
                     content: 'Error: No basket registered. Please /register a basket first.',
-                    ephemeral: true
+                    MessageFlags: MessageFlags.Ephemeral
                 });
             } else {
                 const pattern = await Pattern.findOne({ _id: basket.currentPattern, basketId: basket._id });
                 if (!pattern) {
                     interaction.reply({ 
                         content: 'Error: No pattern selected. Use /crochet to start crocheting a pattern.',
-                        ephemeral: true
+                        MessageFlags: MessageFlags.Ephemeral
                      });
                 } else {
                     const steps = pattern.steps;
                     if (steps.length === 0) {
                         interaction.reply({ 
                             content: `Error: No steps found in pattern "${pattern.name}".`,
-                            ephemeral: true
+                            MessageFlags: MessageFlags.Ephemeral
                         });
                     } else {
                         if (pattern.currentStep === steps.length) {
@@ -45,7 +45,7 @@ module.exports = {
             console.error(error);
             interaction.reply({ 
                 content: 'There was an error finding the current step! Try again.', 
-                ephemeral: true 
+                MessageFlags: MessageFlags.Ephemeral
             });
         }
     }
