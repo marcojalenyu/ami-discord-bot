@@ -33,7 +33,7 @@ module.exports = {
             const taxRate = interaction.options.getNumber('tax');
             const percentFee = interaction.options.getNumber('fee') || 0;
 
-            const tax = price * taxRate;
+            const tax = price * (1+taxRate) - price;
             const fee = price * percentFee;
             const totalPrice = price + tax + fee;
 
