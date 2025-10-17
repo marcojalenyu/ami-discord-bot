@@ -21,7 +21,7 @@ module.exports = {
         },
         {
             name: 'fee',
-            description: 'Additional fee (optional, in decimal, e.g. 0.029 for +2.9% fee)',
+            description: 'Additional fee (optional, in decimal, e.g. 0.029 for 2.9% fee)',
             type: ApplicationCommandOptionType.Number,
             required: false,
         }
