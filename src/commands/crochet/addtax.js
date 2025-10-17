@@ -34,8 +34,8 @@ module.exports = {
             const percentFee = interaction.options.getNumber('fee') || 0;
 
             const tax = price * taxRate;
-            const totalPrice = price + tax;
             const fee = price * percentFee;
+            const totalPrice = price + tax + fee;
 
             let message = `Price Breakdown\n`;
             message += `-----------\n`;
