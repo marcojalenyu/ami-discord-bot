@@ -36,7 +36,7 @@ module.exports = {
             // total = P * (1 + t) * (1 + f)
             const priceBeforeTax = totalPrice / (1+taxRate);
             const taxAmount = priceBeforeTax * taxRate;
-            const feeAmount = totalPrice * percentFee;
+            const feeAmount = priceBeforeTax * percentFee;
             const priceBeforeTaxAndFee = priceBeforeTax - feeAmount;
 
             let message = `Price Breakdown\n`;
@@ -47,13 +47,13 @@ module.exports = {
                 message += `Fee Rate (f): ${(percentFee * 100).toFixed(2)}%\n`;
             }
             message += `-----------\n`;
-            message += `Raw Price (P): ${priceBeforeTax.toFixed(2)}\n`;
+            message += `Price before Tax (P): ${priceBeforeTax.toFixed(2)}\n`;
             message += `Tax Amount (T = P x t): ${taxAmount.toFixed(2)}\n`;
             if (percentFee > 0) {
                 message += `Fee (F = (P + T) x f): ${feeAmount.toFixed(2)}\n`;
             }
             message += `-----------\n`;
-            message += `Raw Price (excluding fees): ${priceBeforeTaxAndFee.toFixed(2)}\n`;
+            message += `Raw Price: ${priceBeforeTaxAndFee.toFixed(2)}\n`;
 
             interaction.reply({
                 content: message,

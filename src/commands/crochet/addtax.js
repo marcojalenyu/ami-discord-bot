@@ -35,7 +35,7 @@ module.exports = {
 
             const tax = price * taxRate;
             const totalPrice = price + tax;
-            const fee = totalPrice * percentFee;
+            const fee = price * percentFee;
 
             let message = `Price Breakdown\n`;
             message += `-----------\n`;
@@ -46,27 +46,21 @@ module.exports = {
             }
             message += `-----------\n`;
             message += `Raw Price (P): ${price}\n`;
-            message += `Tax Amount (T = P x t): ${tax.toFixed(2)}\n`;
+            message += `Tax (T = P x t): ${tax.toFixed(2)}\n`;
             if (percentFee > 0) {
-                message += `Fee (F = (P + T) x f): ${fee.toFixed(2)}\n`;
-            }
-            message += `-----------\n`;
-            message += `Price: ${(price-fee).toFixed(2)}\n`;
-            message += `Tax: ${tax.toFixed(2)}\n`;
-            if (percentFee > 0) {
-                message += `Fee: ${fee.toFixed(2)}\n`;
+                message += `Fee (F = P x f): ${fee.toFixed(2)}\n`;
             }
             message += `-----------\n`;
             message += `Subtotal: ${(totalPrice).toFixed(2)}\n`;
             interaction.reply({
                 content: message,
-                MessageFlags: MessageFlags.Ephemeral
+                flags: MessageFlags.Ephemeral
             });
         } catch (error) {
             console.error(error);
             interaction.reply({ 
                 content: 'Oh no! The calculator ran out of batteries. Try again.', 
-                MessageFlags: MessageFlags.Ephemeral
+                flags: MessageFlags.Ephemeral
             });
         }
     }
