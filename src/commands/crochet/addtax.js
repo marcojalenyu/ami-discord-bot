@@ -47,23 +47,17 @@ module.exports = {
             message += `-----------\n`;
             message += `Raw Price (P): ${price}\n`;
             message += `Tax Amount (T = P x t): ${tax.toFixed(2)}\n`;
-            message += `-----------\n`;
-            message += `Subtotal: P + (P x t) = ${totalPrice.toFixed(2)}\n`;
             if (percentFee > 0) {
-                message += `\nFee Amount (F = (P + T) x f): ${fee.toFixed(2)}\n`;
+                message += `Fee (F = (P + T) x f): ${fee.toFixed(2)}\n`;
             }
             message += `-----------\n`;
+            message += `Price: ${(price-fee).toFixed(2)}\n`;
+            message += `Tax: ${tax.toFixed(2)}\n`;
             if (percentFee > 0) {
-                message += `Final Price: P + (P x t) + ((P + T) x f) = ${(totalPrice + fee).toFixed(2)}\n`;
-                message += `Given a tax rate of ${(taxRate*100).toFixed(2)}% 
-                    and a fee rate of ${(percentFee*100).toFixed(2)}%, 
-                    the product will cost ${(totalPrice).toFixed(2)}, 
-                    and you will get ${(totalPrice - fee).toFixed(2)} after fees.\n`;
-            } else {
-                message += `Final Price: P + T = ${(totalPrice).toFixed(2)}\n`;
-                message += `Given a tax rate of ${(taxRate*100).toFixed(2)}%, 
-                    the product will cost ${(totalPrice).toFixed(2)}.\n`;
+                message += `Fee: ${fee.toFixed(2)}\n`;
             }
+            message += `-----------\n`;
+            message += `Subtotal: ${(totalPrice).toFixed(2)}\n`;
             interaction.reply({
                 content: message,
                 MessageFlags: MessageFlags.Ephemeral
